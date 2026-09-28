@@ -139,3 +139,21 @@ button{cursor:pointer}
   .modal-thumbs{grid-template-columns:repeat(4,1fr)}
   .modal-thumb{height:72px}
 }
+
+
+/* Guru Gobind Singh Saree brand logo */
+.brand-logo-wrap{
+  width:62px;height:62px;flex:0 0 62px;border-radius:16px;overflow:hidden;
+  background:#fff;border:1px solid rgba(111,23,37,.12);
+  box-shadow:0 8px 22px rgba(72,39,27,.12);display:block
+}
+.brand-logo{width:100%;height:100%;object-fit:cover;object-position:center}
+.header .nav{min-height:88px}
+.footer .brand-logo-wrap{width:76px;height:76px;flex-basis:76px;border-radius:18px}
+@media (max-width:680px){
+  .brand-logo-wrap{width:48px;height:48px;flex-basis:48px;border-radius:13px}
+  .header .nav{min-height:74px}
+  .brand-copy b{font-size:.92rem}
+  .brand-copy small{font-size:.56rem}
+  .footer .brand-logo-wrap{width:62px;height:62px;flex-basis:62px}
+}
