@@ -30,12 +30,13 @@ document.querySelectorAll('.reveal').forEach(el=> observer ? observer.observe(el
 
 const filterBtns = document.querySelectorAll('.filter-btn');
 const catalogCards = document.querySelectorAll('.catalog-card');
-filterBtns.forEach(btn=>btn.addEventListener('click',()=>{
-  filterBtns.forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  const filter=btn.dataset.filter;
+function applyCatalogFilter(filter){
+  filterBtns.forEach(b=>b.classList.toggle('active', b.dataset.filter===filter));
   catalogCards.forEach(card=>{ card.hidden = !(filter==='all' || card.dataset.category===filter); });
-}));
+}
+filterBtns.forEach(btn=>btn.addEventListener('click',()=>applyCatalogFilter(btn.dataset.filter)));
+const requestedCategory = new URLSearchParams(window.location.search).get('cat');
+if(requestedCategory && [...filterBtns].some(b=>b.dataset.filter===requestedCategory)) applyCatalogFilter(requestedCategory);
 
 const form = document.querySelector('#enquiryForm');
 if(form){
@@ -69,3 +70,51 @@ document.querySelectorAll('.gallery-card img').forEach(img=>{
 });
 lightbox?.querySelector('.lightbox-close')?.addEventListener('click',()=>lightbox.close());
 lightbox?.addEventListener('click',e=>{ if(e.target===lightbox) lightbox.close(); });
+
+
+const sareeModal = document.querySelector('#sareeModal');
+if(sareeModal){
+  const modalMain = document.querySelector('#sareeModalMain');
+  const modalThumbs = document.querySelector('#sareeModalThumbs');
+  const modalTitle = document.querySelector('#sareeModalTitle');
+  const modalDesc = document.querySelector('#sareeModalDesc');
+  const modalBadge = document.querySelector('#sareeModalBadge');
+  const modalWhatsapp = document.querySelector('#sareeModalWhatsapp');
+
+  function openSareeCard(card){
+    const images=(card.dataset.images||'').split('|').filter(Boolean);
+    modalTitle.textContent=card.dataset.title||'Saree Collection';
+    modalDesc.textContent=card.dataset.desc||'';
+    modalBadge.textContent=card.dataset.badge||'Collection';
+    if(images.length){
+      modalMain.src=images[0];
+      modalMain.alt=(card.dataset.title||'Saree')+' variety';
+    }
+    modalThumbs.innerHTML='';
+    images.forEach((src,index)=>{
+      const button=document.createElement('button');
+      button.type='button';
+      button.className='modal-thumb'+(index===0?' active':'');
+      const image=document.createElement('img');
+      image.src=src;
+      image.alt=(card.dataset.title||'Saree')+' style '+(index+1);
+      button.appendChild(image);
+      button.addEventListener('click',()=>{
+        modalMain.src=src;
+        modalThumbs.querySelectorAll('.modal-thumb').forEach(t=>t.classList.remove('active'));
+        button.classList.add('active');
+      });
+      modalThumbs.appendChild(button);
+    });
+    const msg='Namaste Guru Gobind Singh Saree, I want details for '+(card.dataset.title||'this saree variety')+'. Please share current designs, colours, wholesale price and minimum quantity.';
+    modalWhatsapp.href='https://wa.me/917020231578?text='+encodeURIComponent(msg);
+    sareeModal.showModal();
+  }
+
+  document.querySelectorAll('.saree-card').forEach(card=>{
+    card.addEventListener('click',()=>openSareeCard(card));
+    card.addEventListener('keydown',e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openSareeCard(card); } });
+  });
+  sareeModal.querySelector('.saree-modal-close')?.addEventListener('click',()=>sareeModal.close());
+  sareeModal.addEventListener('click',e=>{ if(e.target===sareeModal) sareeModal.close(); });
+}
