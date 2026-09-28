@@ -80,3 +80,22 @@ button{cursor:pointer}
   .container{width:min(100% - 28px,var(--max))}.topbar .container{justify-content:center;text-align:center}.topbar-right{display:none}.nav{min-height:70px}.brand-mark{width:39px;height:39px}.brand-copy b{font-size:1rem}.brand-copy small{font-size:.6rem}.nav-cta .btn-primary{display:none}.nav-links{top:110px}.section{padding:68px 0}.hero{padding-top:42px}.hero-copy h1{font-size:clamp(3rem,16vw,4.7rem)}.hero-actions{display:grid;grid-template-columns:1fr}.hero-actions .btn{width:100%}.hero-visual{min-height:440px}.photo-main{width:92%;height:385px}.floating-card{width:210px;bottom:20px;padding:16px}.trust-row{display:grid;grid-template-columns:1fr 1fr}.cards-3,.collection-grid,.catalog-grid{grid-template-columns:1fr}.collection-card{min-height:260px}.story-media{min-height:420px}.story-media .p1{height:350px;width:86%}.story-media .p2{height:220px;width:55%}.stats{grid-template-columns:1fr 1fr}.stat{padding:20px 12px}.gallery{display:grid;grid-template-columns:1fr;grid-template-rows:repeat(3,280px)}.gallery-card:nth-child(3){grid-column:auto}.cta-band{padding:34px 24px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.footer-grid{grid-template-columns:1fr}.footer-grid>div:first-child{grid-column:auto}.page-hero{padding-top:52px}.mini-photo{height:290px}.footer-bottom{display:block}.footer-bottom span{display:block;margin-top:6px}.whatsapp-float{width:54px;height:54px}.ticker{font-size:.78rem}}
 
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+
+/* Real saree / dress imagery */
+.collection-card.image-card{background:#3b1b1b}
+.collection-card.image-card::before{display:none}
+.collection-card.image-card::after{
+  inset:0;
+  background:linear-gradient(to top,rgba(31,12,15,.88) 0%,rgba(31,12,15,.38) 52%,rgba(31,12,15,.05) 78%);
+  z-index:-1;
+}
+.collection-card.image-card>img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;
+  transition:transform .55s ease,filter .55s ease;
+}
+.collection-card.image-card:hover>img{transform:scale(1.065);filter:saturate(1.05)}
+.catalog-art{background:#ead9cf}
+.catalog-art::after{inset:0;transform:none;background:linear-gradient(to top,rgba(42,18,15,.16),transparent 52%)}
+.catalog-art img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.catalog-card:hover .catalog-art img{transform:scale(1.055)}
